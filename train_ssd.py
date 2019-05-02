@@ -121,6 +121,9 @@ tf.app.flags.DEFINE_boolean(
 tf.app.flags.DEFINE_boolean(
     'multi_gpu', True,
     'Whether there is GPU to use for training.')
+tf.app.flags.DEFINE_boolean(
+    'from_scratch', True,
+    'Whether train model from scratch.')
 
 FLAGS = tf.app.flags.FLAGS
 #CUDA_VISIBLE_DEVICES
@@ -152,9 +155,12 @@ def validate_batch_size_for_multi_gpu(batch_size):
     return 0
 
 def get_init_fn():
-    return scaffolds.get_init_fn_for_scaffold(FLAGS.model_dir, FLAGS.checkpoint_path,
-                                            FLAGS.model_scope, FLAGS.checkpoint_model_scope,
-                                            FLAGS.checkpoint_exclude_scopes, FLAGS.ignore_missing_vars,
+    if FLAGS.from_scratch:
+        return None
+    else:
+        return scaffolds.get_init_fn_for_scaffold(FLAGS.model_dir, FLAGS.checkpoint_path,
+                                                  FLAGS.model_scope, FLAGS.checkpoint_model_scope,
+                                                  FLAGS.checkpoint_exclude_scopes, FLAGS.ignore_missing_vars,
                                             name_remap={'/kernel': '/weights', '/bias': '/biases'})
 
 # couldn't find better way to pass params from input_fn to model_fn
