@@ -34,14 +34,14 @@ VOC2007TEST
     ...
     ImageSets
 '''
-dataset_path = '/media/rs/7A0EE8880EE83EAF/Detections/PASCAL/VOC/VOC2007TEST'
+dataset_path = '/data/VOC2007TEST'
 # change above path according to your system settings
 pred_path = './logs/predict'
 pred_file = 'results_{}.txt' # from 1-num_classes
 output_path = './logs/predict/eval_output'
 cache_path = './logs/predict/eval_cache'
 anno_files = 'Annotations/{}.xml'
-all_images_file = 'ImageSets/Main/test.txt'
+all_images_file = 'ImageSets/Main/val.txt'
 
 def parse_rec(filename):
     """ Parse a PASCAL VOC xml file """
